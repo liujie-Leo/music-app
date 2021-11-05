@@ -1,0 +1,52 @@
+.player{
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  .circle-1{
+    background:rgba(0, 0, 0, .4);
+    width:650rpx;
+    height: 650rpx;
+    border: 1px solid rgba(255, 255, 255, .1);
+  }
+  .circle-2{
+    background-color: #232323;
+    position: absolute;
+    height: 600rpx;
+    width: 600rpx;
+    left: 28rpx;
+    top: 28rpx;
+  }
+  .circle-3{
+    background-color: #fff;
+    position: absolute;
+    height: 400rpx;
+    width: 400rpx;
+    left: 128rpx;
+    top: 128rpx;
+    overflow: hidden;
+    image{
+      max-width: 100%;
+      max-height:100%;
+    }
+  }
+}
+.bg-img{
+  position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+  // background-image: url('../../assets//images/music/bg.JPG');
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  filter: blur(24px);
+  z-index: -3;
+}
+.left-btn,
+.right-btn{
+  font-size: 64rpx;
+}
+.pause-btn{
+  font-size: 128rpx;
+}

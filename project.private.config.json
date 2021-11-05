@@ -1,0 +1,54 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "我的",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "发现",
+          "pathName": "pages/found/found",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "歌单",
+          "pathName": "pages/musicList/musicList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "播放器",
+          "pathName": "pages/player/player",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "登录",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "最近播放",
+          "pathName": "pages/recentPlay/recentPlay",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}
