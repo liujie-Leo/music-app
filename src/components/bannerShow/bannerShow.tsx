@@ -1,20 +1,28 @@
 import { Component } from 'react'
-import { View, Swiper,SwiperItem,Text } from '@tarojs/components'
+import { View, Swiper,SwiperItem,Text,Image } from '@tarojs/components'
 import "./bannerShow.less";
 
-export default class BannerShow extends Component {
+type Props = {
+  title?: String,
+  list?:Array<any>
+}
+export default class BannerShow extends Component<Props> {
 
   componentDidMount() {
-    console.log(this);
   }
 
   render() {
+    const list = this.props.list || []
+    const title = this.props.title || ''
+    console.log(list);
     return (
       <View className='banner-show bg-white px-8 py-8'>
         <View className='flex items-center justify-between'>
           <View className='flex items-center'>
             <View className='i-queding1 icon text-2xl text-gray-500 mr-2'></View>
-            <View className='text-gray-700 text-base'>欧美流行精选</View>
+            <View className='text-gray-700 text-base font-bold mt-1'>
+              {title || "默认标题"}
+            </View>
           </View>
           <View>
             <View className='text-base text-gray-700'>播放</View>
@@ -27,13 +35,13 @@ export default class BannerShow extends Component {
             nextMargin='64rpx'
           >
             <SwiperItem>
-              <List></List>
+              <List list={list[0]}></List>
             </SwiperItem>
             <SwiperItem>
-              <List></List>
+              <List list={list[1]}></List>
             </SwiperItem>
             <SwiperItem>
-              <List></List>
+              <List list={list[2]}></List>
             </SwiperItem>
           </Swiper>
         </View>
@@ -43,41 +51,32 @@ export default class BannerShow extends Component {
 }
 
 
+type ListProps = {
+  list?:Array<any>
+}
+class List extends Component<ListProps> {
+  componentDidMount() {
+  }
 
-class List extends Component{
   render() {
+    let list = this.props.list||[]
     return (
       <View className='h-full'>
-        <View className='flex py-2 border-b'>
-          <View className='h-24 w-24 rounded-sm bg-gray-200'></View>
-          <View className='flex-1 ml-4 flex flex-col justify-center'>
-            <View className='text-sm'>我的歌声里</View>
-            <View className='text-xs flex items-center text-gray-500'>
-              <Text>超3千人点赞</Text>
-              <Text>卢卢快闭嘴</Text>
+        {list.map((item) => {
+          return (
+            <View className='flex py-2 border-b' key={item["id"]}>
+              <View className='h-24 w-24 rounded-sm bg-gray-200 overflow-hidden'>
+                <Image src={item["coverImgUrl"]} className='max-h-full max-w-full'></Image>
+              </View>
+              <View className='flex-1 ml-4 flex flex-col justify-center'>
+                <View className='text-sm'>{item["name"]}</View>
+                <View className='text-xs flex items-center text-gray-500'>
+                  <Text>{item["author"]}</Text>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-        <View className='flex py-2 border-b'>
-          <View className='h-24 w-24 rounded-sm bg-gray-200'></View>
-          <View className='flex-1 ml-4 flex flex-col justify-center'>
-            <View className='text-sm'>我的歌声里</View>
-            <View className='text-xs flex items-center text-gray-500'>
-              <Text>超3千人点赞</Text>
-              <Text>卢卢快闭嘴</Text>
-            </View>
-          </View>
-        </View>
-        <View className='flex py-2 '>
-          <View className='h-24 w-24 rounded-sm bg-gray-200'></View>
-          <View className='flex-1 ml-4 flex flex-col justify-center'>
-            <View className='text-sm'>我的歌声里</View>
-            <View className='text-xs flex items-center text-gray-500'>
-              <Text>超3千人点赞</Text>
-              <Text>卢卢快闭嘴</Text>
-            </View>
-          </View>
-        </View>
+          );
+        })}
       </View>
     );
   }

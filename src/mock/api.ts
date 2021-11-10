@@ -1,4 +1,4 @@
-import { favorateList, createdList, musicList } from "./const";
+import { favorateList, createdList, musicList, swiperPlayList } from "./const";
 
 // 获取歌单列表
 export const getPlayList = function (type: string) {
@@ -13,6 +13,15 @@ export const getPlayList = function (type: string) {
     });
   }
 };
+
+// 获取swiper歌单列表
+export const getSwiperPlayList = function (options) {
+  if (options.type === "folk") {
+    return new Promise((resolve) => {
+      resolve(swiperPlayList);
+    });
+  }
+}
 
 // 获取歌曲列表
 export const getMusicList = function (options?) {

@@ -8,18 +8,27 @@ import {
   ScrollView,
 } from "@tarojs/components";
 import BannerShow from '@/components/bannerShow/bannerShow'
+import { getSwiperPlayList } from "@/mock/api";
 import "./found.less";
 
 
 export default class Index extends Component {
+  state = {
+    swiperFolkPlayList:[]
+  };
 
-  componentWillMount () { }
+  componentDidMount() {
+    this.getData();
+  }
 
-  componentDidMount () { }
+  getData = async () => {
+    let swiperFolkPlayList = await getSwiperPlayList({ type: "folk" });
+    this.setState({
+      swiperFolkPlayList
+    });
+  };
 
-  componentWillUnmount () { }
-
-  render () {
+  render() {
     return (
       <View className='index pt-8 found bg-gray-200 min-h-screen'>
         {/* 搜索栏 */}
@@ -103,11 +112,21 @@ export default class Index extends Component {
         </ScrollView>
         {/* 热门播客 */}
         <View className='mt-8'>
-          <BannerShow></BannerShow>
+          {this.state.swiperFolkPlayList.length > 0 ? (
+            <BannerShow
+              title='民谣和你，故事与风'
+              list={this.state.swiperFolkPlayList}
+            />
+          ) : null}
         </View>
         {/* 歌单推荐 */}
         <View className='mt-8'>
-          <BannerShow></BannerShow>
+          {this.state.swiperFolkPlayList.length > 0 ? (
+            <BannerShow
+              title='欧美热门精选'
+              list={this.state.swiperFolkPlayList}
+            />
+          ) : null}
         </View>
         <View className='place'></View>
       </View>

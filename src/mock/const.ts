@@ -1,28 +1,40 @@
 // 收藏歌单列表
 export const favorateList = [
   {
-    id:1,
-    name: '牛炮炮的2020年度歌单',
-    nums:'10'
-  }, {
-    id:2,
-    name: '循环',
-    nums:5
-  }
-]
+    id: 1,
+    name: "牛炮炮的2020年度歌单",
+    nums: "10",
+    coverImgUrl: "https://www.betterleo.com/cdn/music_app/zhaolei.png",
+  },
+  {
+    id: 2,
+    name: "循环",
+    nums: 5,
+    coverImgUrl: "https://www.betterleo.com/cdn/music_app/songdongye.png",
+  },
+  {
+    id: 3,
+    name: "国语流行",
+    nums: 5,
+    coverImgUrl: "https://www.betterleo.com/cdn/music_app/pushu.png",
+  },
+];
 
 // 创建歌单列表
 export const createdList = [
   {
-    id:1,
-    name: '牛炮炮的2020年度歌单',
-    nums:'10'
-  }, {
-    id:2,
-    name: '循环',
-    nums:5
-  }
-]
+    id: 1,
+    name: "牛炮炮的2020年度歌单",
+    nums: "10",
+    coverImgUrl: "https://www.betterleo.com/cdn/music_app/zhaolei.png",
+  },
+  {
+    id: 2,
+    name: "循环",
+    nums: 5,
+    coverImgUrl: "https://www.betterleo.com/cdn/music_app/songdongye.png",
+  },
+];
 
 // 歌单列表
 export const musicList = [
@@ -97,4 +109,68 @@ export const musicList = [
     id: 10,
     bgImage: "https://www.betterleo.com/cdn/music3.JPG",
   },
+];
+
+// swiper歌单列表
+export const swiperPlayList = [
+  [
+    {
+      id: 1,
+      name: "成都",
+      author: "赵雷",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/zhaolei.png",
+    },
+    {
+      id: 2,
+      name: "斑马，斑马",
+      author: "宋冬野",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/songdongye.png",
+    },
+    {
+      id: 3,
+      name: "那些花儿",
+      author: "朴树",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/pushu.png",
+    },
+  ],
+  [
+    {
+      id: 1,
+      name: "成都",
+      author: "赵雷",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/zhaolei.png",
+    },
+    {
+      id: 2,
+      name: "斑马，斑马",
+      author: "宋冬野",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/songdongye.png",
+    },
+    {
+      id: 3,
+      name: "那些花儿",
+      author: "朴树",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/pushu.png",
+    },
+  ],
+  [
+    {
+      id: 1,
+      name: "成都",
+      author: "赵雷",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/zhaolei.png",
+    },
+    {
+      id: 2,
+      name: "斑马，斑马",
+      author: "宋冬野",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/songdongye.png",
+    },
+    {
+      id: 3,
+      name: "那些花儿",
+      author: "朴树",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/pushu.png",
+    },
+  ],
 ];
