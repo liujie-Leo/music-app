@@ -1,10 +1,10 @@
 import { Component } from "react";
-import { View, Text,Image } from "@tarojs/components";
+import { View, Text, Image, Input, Checkbox,CheckboxGroup } from "@tarojs/components";
 import { getPlayList } from "@/mock/api";
 import { getFormatUrl } from "@/utils/tools";
 import Taro from "@tarojs/taro";
 import store from '@/store/store'
-
+import ActionSheet from '@/components/actionSheet/actionSheet'
 import "./my.less";
 
 
@@ -24,15 +24,20 @@ export default class Index extends Component {
     favirateList: [],
     createdList: [],
     isLogin: false,
-    userInfo:{}
+    userInfo: {},
+    openActionSheet: false,
+    inputValue:''
   };
 
+  // 生命周期
   componentDidMount() {
     this.getData();
   }
-
   componentDidShow() {
     this.initUserInfo();
+  }
+  componentDidHide() {
+    this.initActionSheet();
   }
 
   // 初始化数据
@@ -42,22 +47,78 @@ export default class Index extends Component {
     this.setState({ favirateList, createdList });
   };
   initUserInfo = () => {
-    const userInfo = store.getState()
-    if (JSON.stringify(userInfo) !== '{}') {
+    const userInfo = store.getState().userReducer;
+    if (JSON.stringify(userInfo) !== "{}") {
       this.setState({
         userInfo,
-        isLogin:true
+        isLogin: true,
       });
     } else {
       this.setState({
         isLogin: false,
-        userInfo:{}
-      })
+        userInfo: {},
+      });
     }
-  }
+  };
+  initActionSheet = () => {
+    this.setState({
+      openActionSheet: false,
+    });
+  };
 
-  onScroll = (id: string) => {
+  // 自动滚动
+  onScroll = (id?: string) => {
     console.log(id);
+  };
+
+  /** 新建歌单 */
+  createMusicListType = "";
+  // 新建歌单弹框
+  createMusicList = (type: string) => {
+    this.createMusicListType = type;
+    this.setState({
+      openActionSheet: true,
+    });
+  };
+  // 关闭弹框
+  onActionSheetClose = () => {
+    this.setState({
+      openActionSheet: false,
+      inputValue:''
+    });
+  };
+  checkboxChange = (e) => {
+    console.log(e);
+  };
+  // 新建歌单确认
+  onCreateMusicListConfirm = () => {
+    let value = this.state.inputValue;
+    const pushedObj = {
+      id: new Date().getTime(),
+      name: value,
+      nums: "10",
+      coverImgUrl: "https://www.betterleo.com/cdn/music_app/zhaolei.png",
+    };
+    if (this.createMusicListType === "创建歌单") {
+      let list: any = [...this.state.createdList];
+      list.push(pushedObj);
+      this.setState({
+        createdList: list,
+      });
+    }
+    if (this.createMusicListType === "收藏歌单") {
+      let list: any = [...this.state.favirateList];
+      list.push(pushedObj);
+      this.setState({
+        favirateList: list,
+      });
+    }
+    this.onActionSheetClose();
+  };
+  onMusicListInput = (e) => {
+    this.setState({
+      inputValue: e.detail.value,
+    });
   };
 
   render() {
@@ -123,7 +184,11 @@ export default class Index extends Component {
         <View
           className='bg-white rounded-md p-8 mt-8 flex'
           onClick={() => {
-            navPage("musicList");
+            navPage("musicList", {
+              coverImgUrl:
+                "https://www.betterleo.com/cdn/music_app/songdongye.png",
+              name: "我喜欢的音乐",
+            });
           }}
         >
           <View className='bg-gray-300 rounded-sm h-24 w-24 flex items-center justify-center'>
@@ -146,7 +211,7 @@ export default class Index extends Component {
             <View
               className='font-bold bar-item relative'
               onClick={() => {
-                this.onScroll("#create-list");
+                this.onScroll();
               }}
             >
               <View className='z-50 relative'>创建歌单</View>
@@ -155,16 +220,57 @@ export default class Index extends Component {
             <View
               className='font-bold bar-item relative'
               onClick={() => {
-                this.onScroll("#favorite-list");
+                this.onScroll();
               }}
             >
               <View className='z-50 relative'>收藏歌单</View>
               <View className='bar'></View>
             </View>
           </View>
-          <MusicList title='创建歌单' banner='创建共享歌单，和你的好友一同管理' list={this.state.favirateList}></MusicList>
-          <MusicList title='收藏歌单' list={this.state.createdList}></MusicList>
+          {musicList({
+            type: "创建歌单",
+            list: this.state.createdList,
+            title: "创建共享歌单，和你的好友一同管理",
+            handleCreate: this.createMusicList,
+          })}
+          {musicList({
+            type: "收藏歌单",
+            list: this.state.favirateList,
+            handleCreate: this.createMusicList,
+          })}
         </View>
+        {/* 弹出层 */}
+        <ActionSheet
+          isOpened={this.state.openActionSheet}
+          onClose={this.onActionSheetClose}
+          onConfirm={this.onCreateMusicListConfirm}
+        >
+          <View className='py-16 flex justify-start items-center'>
+            <Input
+              placeholder='输入新建歌单标题'
+              className='text-gray-500 text-left w-full'
+              onInput={this.onMusicListInput}
+              value={this.state.inputValue}
+            ></Input>
+          </View>
+          <View>
+            <CheckboxGroup onChange={this.checkboxChange}>
+              <View className='flex justify-start items-center mb-4'>
+                <Checkbox value='123' color='#DC2626'></Checkbox>
+                <Text className='text-xs text-gray-500'>
+                  设置为共享歌单（和好友一起管理）
+                </Text>
+                <Text className='text-s px-1 text-red-500 border border-red-500'>
+                  限免30天
+                </Text>
+              </View>
+              <View className='flex justify-start items-center'>
+                <Checkbox value='123' color='#DC2626'></Checkbox>
+                <View className='text-xs text-gray-500'>设置为隐私歌单</View>
+              </View>
+            </CheckboxGroup>
+          </View>
+        </ActionSheet>
       </View>
     );
   }
@@ -205,59 +311,64 @@ const login = function (loginStatus) {
 };
 
 
-// 歌单
-type MusicListType = {
-  title?: String,
-  list?: Array<any>,
-  banner?:String
+
+// 歌单列表
+interface musicListOptions {
+  type?: string;
+  title?: string;
+  list?: Array<any>;
+  handleCreate?: any;
 }
-class MusicList extends Component<MusicListType> {
-  render() {
-    const title = this.props.title||'默认标题'
-    const list = this.props.list || []
-    const banner = this.props.banner || ''
-    return (
-      <View
-        className='bg-white mt-8 rounded overflow-hidden pb-8'
-        id='favorite-list'
-      >
-        {
-          banner ? <View className='text-center py-4 text-yellow-600 bg-red-50 text-sm'>{ banner }</View>:null
-        }
-        <View className='flex justify-between px-8 py-6'>
-          <View className='text-gray-500 text-base'>
-            {title}({list.length}个)
-          </View>
-          <View className='flex items-center'>
-            <View className='icon i-zengjia text-2xl text-gray-500'></View>
-          </View>
+const musicList = function (options: musicListOptions) {
+  const type = options.type || "";
+  const title = options.title || "";
+  const list = options.list || [];
+  const handleCreate = options.handleCreate;
+  return (
+    <View
+      className='bg-white mt-8 rounded overflow-hidden pb-8'
+    >
+      {title ? (
+        <View className='text-center py-4 text-yellow-600 bg-red-50 text-sm'>
+          {title}
         </View>
-        <View className='px-8'>
-          {list.map((item) => {
-            return (
-              <View
-                className='flex mb-4'
-                key={item["id"]}
-                onClick={() => {
-                  navPage("musicList",item);
-                }}
-              >
-                <View className='w-24 h-24 rounded-sm bg-gray-200 mr-4 overflow-hidden'>
-                  <Image src={item["coverImgUrl"]}></Image>
-                </View>
-                <View className='flex-1'>
-                  <View className='font-bold tracking-tighter'>
-                    {item["name"]}
-                  </View>
-                  <View className='text-sm text-gray-500'>
-                    {item["nums"]}首
-                  </View>
-                </View>
-              </View>
-            );
-          })}
+      ) : null}
+      <View className='flex justify-between px-8 py-6'>
+        <View className='text-gray-500 text-base'>
+          {type}({list.length}个)
+        </View>
+        <View className='flex items-center'>
+          <View
+            className='icon i-zengjia text-2xl text-gray-500'
+            onClick={() => {
+              handleCreate(type);
+            }}
+          ></View>
         </View>
       </View>
-    );
-  }
-}
+      <View className='px-8'>
+        {list.map((item) => {
+          return (
+            <View
+              className='flex mb-4'
+              key={item["id"]}
+              onClick={() => {
+                navPage("musicList", item);
+              }}
+            >
+              <View className='w-24 h-24 rounded-sm bg-gray-200 mr-4 overflow-hidden'>
+                <Image src={item["coverImgUrl"]}></Image>
+              </View>
+              <View className='flex-1'>
+                <View className='font-bold tracking-tighter'>
+                  {item["name"]}
+                </View>
+                <View className='text-sm text-gray-500'>{item["nums"]}首</View>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+    </View>
+  );
+};

@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { View } from "@tarojs/components";
 import Taro from '@tarojs/taro'
 import store from "@/store/store";
-import {createUpdateUserInfo} from "@/store/action"
+import {createUpdateUserInfo} from "@/store/modules/userInfo/action"
 import './login.less'
 
 

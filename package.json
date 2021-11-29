@@ -9,6 +9,7 @@
     "css": "less"
   },
   "scripts": {
+    "build-prod:weapp": "NODE_ENV=production taro build --type weapp",
     "build:weapp": "taro build --type weapp",
     "build:swan": "taro build --type swan",
     "build:alipay": "taro build --type alipay",
@@ -19,7 +20,8 @@
     "build:jd": "taro build --type jd",
     "build:dd": "taro build --type dd",
     "build:quickapp": "taro build --type quickapp",
-    "dev:weapp": "npm run build:weapp -- --watch",
+    "dev:weapp": "npm run build:weapp  -- --watch",
+    "prod:weapp": "npm run build-prod:weapp  -- --watch",
     "dev:swan": "npm run build:swan -- --watch",
     "dev:alipay": "npm run build:alipay -- --watch",
     "dev:tt": "npm run build:tt -- --watch",
@@ -43,9 +45,11 @@
     "@tarojs/react": "3.3.8",
     "@tarojs/runtime": "3.3.8",
     "@tarojs/taro": "3.3.8",
+    "moment": "^2.29.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "redux": "^4.1.2"
+    "redux": "^4.1.2",
+    "taro-ui": "^3.0.0-alpha.3"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.13.6",

@@ -4,9 +4,17 @@ export default {
     "pages/podcast/podcast",
     "pages/my/my",
     "pages/musicList/musicList",
-    "pages/player/player",
+    // "pages/player/player",
     "pages/login/login",
     "pages/recentPlay/recentPlay",
+  ],
+  subPackages: [
+    {
+      "root": "pages/player",
+      "pages": [
+        "player"
+      ]
+    }
   ],
   window: {
     backgroundTextStyle: "light",
@@ -26,12 +34,6 @@ export default {
         iconPath: "assets/images/tabBar/1.png",
         selectedIconPath: "assets/images/tabBar/1s.png",
       },
-      // {
-      //   pagePath: "pages/podcast/podcast",
-      //   text: "播客",
-      //   iconPath: "assets/images/tabBar/2.png",
-      //   selectedIconPath: "assets/images/tabBar/2s.png",
-      // },
       {
         pagePath: "pages/my/my",
         text: "我的",

@@ -33,7 +33,7 @@ export default class Index extends Component {
   };
 
   getStore = () => {
-    const userInfo = store.getState();
+    const userInfo = store.getState().userReducer;
     this.setState({
       userInfo,
     });

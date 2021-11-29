@@ -33,7 +33,7 @@
         {
           "name": "播放器",
           "pathName": "pages/player/player",
-          "query": "",
+          "query": "id=1",
           "scene": null
         },
         {
